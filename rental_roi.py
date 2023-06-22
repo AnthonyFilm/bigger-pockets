@@ -1,12 +1,18 @@
-class rentalProperty():
+class RentalProperty():
     def __init__(self):
+        print("Welcome to the Rental Property Return on Investment Calculator")
         self.property_name = input('Please enter the name of the property.')
+
+    def propIncome(self):
         self.rental_income = float(input("What is the expected rental income per month in dollars? "))
         self.laundry_income = float(input("On this property, what is the expected laundry income per month in dollars? "))
         self.storage_income = float(input("On this property, what is the expected storage income per month in dollars? "))
         self.misc_income = float(input("Enter any other miscelaneous income for this property (if none, enter 0): "))
         self.total_income = self.rental_income + self.laundry_income + self.storage_income + self.misc_income
         print(f'Your total estimated income on this property is ${self.total_income}')
+        return self.total_income
+    
+    def propExpenses(self):
         print("Now we'll calculate your expenses on the property.")
         self.tax = float(input("What is the expected property tax per month in dollars? "))
         self.insurance = float(input("What is the expected insurance cost per month? "))
@@ -30,11 +36,21 @@ class rentalProperty():
         self.mortgage = float(input("What is the monthly mortgage payment per month in dollars? "))
         self.total_expenses = self.tax + self.insurance + self.utilities + self.hoa + self.lawn_snow + self.vacancy + self.repairs + self.cap_expenditures + self.prop_manage + self.mortgage
         print(f'Your total monthly expenses on the property are estimated to be ${self.total_expenses}\n')
-        self.cash_flow = self.total_income - self.total_expenses
-        print(f'Given the figures you have entered, your monthly cashflow on this property is expected to be ${self.cash_flow}')
-        if self.cash_flow <= 0:
-            print('Your income will not cover your expenses. This may not be a good investment. If you believe this is an error, please check your figures and run the program again.')
+        return self.total_expenses
+    
+    def propCashFlow(self):
+        if self.total_expenses and self.total_income:
+            self.cash_flow = self.total_income - self.total_expenses
+            print(f'Given the figures you have entered, your monthly cashflow on this property is expected to be ${self.cash_flow}')
+            if self.cash_flow <= 0:
+                print('Your income will not cover your expenses. This may not be a good investment. If you believe this is an error, please check your figures and run the program again.')
+                return
+            return self.cash_flow
+        else:
+            print('You must first compute the Total Expenses and Total Income on this property to get your Cash Flow.')
             return
+        
+    def propCashOnCashROI(self):    
         print('Now we will calculate your expected Cash on Cash Return on Investment (ROI).')
         self.down_payment = float(input("What is your expected down payment on the property in dollars? "))
         self.closing_costs = float(input("What are the expected closing costs on the property? "))
@@ -46,13 +62,20 @@ class rentalProperty():
         print(f"Your annual cashflow on the {self.property_name} property is ${self.annual_cashflow}\n")
         self.coc_roi_percent = 100 * (self.annual_cashflow / self.total_investment)
         print(f"Finally, the figure you've been waiting for. Your Cash on Cash Return on Investment (ROI) percentage is {self.coc_roi_percent}%")
+        return self.coc_roi_percent
 
            
 
-print("Welcome to the Rental Property Return on Investment Calculator")
-
-new_property = rentalProperty()
 
 
+new_property = RentalProperty()
+
+new_property.propIncome()
+
+new_property.propExpenses()
+
+new_property.propCashFlow()
+
+new_property.propCashOnCashROI()
 
 
